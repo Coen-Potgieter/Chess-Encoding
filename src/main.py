@@ -2,6 +2,7 @@ import chess
 import math
 import chess.pgn
 import io
+import json
 
 def legal_moves_from_give_board_config(board, fen):
     board.set_fen(fen)
@@ -12,6 +13,12 @@ def read_x_bits(bits, x):
 
     mask = (0b1 << x) - 1
     return bits >> x, bits & mask
+
+
+def save_game_to_json(encoded_moves):
+
+    with open("src/data/predefinedMoves/game1.json", "w") as tf:
+        json.dump(encoded_moves, tf)
 
 
 def encode_chess_game(bits):
@@ -59,15 +66,15 @@ def decode_chess_game(pgn):
 
 def main():
 
-    with open("game1.pgn", "r") as tf:
-        pgn = tf.read()
+    # with open("game1.pgn", "r") as tf:
+    #     pgn = tf.read()
 
-    decode_chess_game(pgn)
-    return
-    # legal_moves_from_give_board_config(board, "r1bqkbnr/ppp2ppp/2n5/4p3/3P1B2/2N2N2/PPP1Q1PP/R3KB1R b KQkq - 0 1")
+    # decode_chess_game(pgn)
+    # return
+
     game = encode_chess_game(101011100)
     print(game)
-    bits = 0b111101
+    save_game_to_json(game)
     
     # legal_moves = list(board.legal_moves)
     # print(legal_moves)
