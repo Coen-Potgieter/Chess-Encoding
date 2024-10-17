@@ -1,6 +1,5 @@
 import requests as re
 import time
-import websocket
 import json
 import dotenv
 import os
@@ -52,18 +51,9 @@ def on_message(ws, message):
             time.sleep(1)  # Sleep to allow the move to be registered
 
 
-# Connect to Lichess WebSocket
-def connect_to_game(game_id, token):
-    url = f"wss://lichess.org/api/bot/game/stream/{game_id}"
-    headers = {"Authorization": f"Bearer {token}"}
-    ws = websocket.WebSocketApp(url,
-                                on_message=on_message,
-                                header=[f"Authorization: Bearer {token}"])
-    ws.run_forever()
-
-
 def cancel_challenge(bot_headers, game_id):
-    response = re.post(f"https://lichess.org/api/challenge/{game_id}/cancel", headers=bot_headers)
+    response = re.post(f"https://lichess.org/api/challenge/{game_id}/cancel",
+                       headers=bot_headers)
     return response
 
 
@@ -93,12 +83,16 @@ def print_pretty_json(response):
 
 
 def accept_challenge(bot_headers, game_id):
-    response = re.post(API_URL + f"/challenge/{game_id}/accept", headers=bot_headers)
+    response = re.post(API_URL + f"/challenge/{game_id}/accept",
+                       headers=bot_headers)
     return response
 
 
 def listen_to_events(bot_headers):
-    with re.get(API_URL + "/stream/event", headers=bot_headers, stream=True) as response:
+
+    with re.get(API_URL + "/stream/event",
+                headers=bot_headers, stream=True) as response:
+
         for line in response.iter_lines():
             if line:
                 event = line.decode('utf-8')
@@ -150,7 +144,8 @@ def clear_all_challenges(bot_headers):
 
 
 def decline_challenge(bot_headers, game_id):
-    response = re.post(API_URL + f"/challenge/{game_id}/decline", headers=bot_headers)
+    response = re.post(API_URL + f"/challenge/{game_id}/decline",
+                       headers=bot_headers)
     return response
 
 
@@ -179,42 +174,7 @@ def resign_all_games(bot_headers):
 
 def main():
 
-    # Bot A makes challenge
-    # make_challenge(A_HEADERS, "freeMemory2")
-
-    response = stream_incoming_events(B_HEADERS)
-    print_pretty_json(response)
-    # Bot B accepts challenge
-    # response = make_challenge(A_HEADERS, "freeMemory2")
-    # print(response.status_code)
-    # print_pretty_json(response.json())
-    # return
-
-    response = list_challenges(A_HEADERS)
-    print_pretty_json(response)
-    return
-    print(response)
-    list_challenges(B_HEADERS)
-    return
-    response = cancel_challenge(A_HEADERS, "OSf4xI4h")
-    print_pretty_json(response)
-    return
-
-    # Bot A challenges Bot B
-    headers_a = {"Authorization": f"Bearer {TOKEN_A}"}
-    response = re.post("https://lichess.org/api/challenge/freeMemory2", 
-                       headers=headers_a)
-
-    if response.status_code == 200:
-        print(response.json())
-        return
-        game_id = response.json()['challenge']['id']
-        print(f"Challenge created, Game ID: {game_id}")
-
-        # Connect to the game stream and play the predefined moves
-        connect_to_game(game_id, TOKEN_A)
-    else:
-        print(f"Failed to create challenge: {response.status_code}")
+    pass
 
 
 if __name__ == "__main__":

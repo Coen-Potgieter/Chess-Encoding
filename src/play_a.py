@@ -36,7 +36,7 @@ def main():
     elif event["state"] == api.EventState.GAME_DECLINED:
         # if game is declined then make the challenge again
         api.make_challenge(HEADERS, "freeMemory2")
-    
+
 
 if __name__ == "__main__":
     main()
