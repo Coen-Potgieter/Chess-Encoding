@@ -61,3 +61,9 @@ asyncio.get_event_loop().run_until_complete(play_game())
 - Right now Bot A successfully cancels all challenges and aborts all games then challenges Bot B
 - Then Bot B accepts the challenge
 - Need to figure out workflow of now play the accepted game between the two bots
+- Need to change things, right now im polling the stream and they don't like that
+- so change workflow
+
+## Notes
+
+- would like to export the state of the game at each move but their API delays this request by 3 to 60 seconds to avoid cheating of some sort

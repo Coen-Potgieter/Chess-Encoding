@@ -1,5 +1,4 @@
 import requests as re
-import time
 import json
 import dotenv
 import os
@@ -23,32 +22,9 @@ class EventState(Enum):
     GAME_DECLINED = 4
 
 
-with open("src/data/predefinedMoves/game1.json", "r") as tf:
-    predefined_moves = json.load(tf)
-
-
-# Function to send moves
-def make_move(game_id, move, token):
-
-    url = f"https://lichess.org/api/bot/game/{game_id}/move/{move}"
-    headers = {"Authorization": f"Bearer {token}"}
-    response = re.post(url, headers=headers)
-    print(f"Move {move} sent: {response.status_code}")
-    return response.status_code
-
-
-# WebSocket handler for receiving game events
-def on_message(ws, message):
-    game_event = json.loads(message)
-    if 'type' in game_event and game_event['type'] == 'gameFull':
-        game_id = game_event['id']
-        print(f"Game started! Game ID: {game_id}")
-
-        # Go through the predefined moves
-        for index, move in enumerate(predefined_moves):
-            current_bot_token = TOKEN_A if index % 2 == 0 else TOKEN_B
-            make_move(game_id, move, current_bot_token)
-            time.sleep(1)  # Sleep to allow the move to be registered
+class GameState(Enum):
+    GAME_FULL = 1
+    GAME_STATE = 2
 
 
 def cancel_challenge(bot_headers, game_id):
@@ -104,14 +80,17 @@ def listen_to_events(bot_headers):
 def handle_event(event):
 
     event = json.loads(event)
+    print(event)
     event_type = event["type"]
     if event_type == "challenge":
         return {"state": EventState.CHALLENGE, "id": event["challenge"]["id"]}
     elif event_type == "gameStart":
-        return {"state": EventState.GAME_START, "id": event["game"]["gameId"]}
+        return {"state": EventState.GAME_START, "id": event["game"]["gameId"],
+                "my_turn": event["game"]["isMyTurn"]}
     elif event_type == "challengeDeclined":
         return {"state": EventState.GAME_DECLINED}
     else:
+        # print(event_type)
         return event_type
 
 
@@ -170,6 +149,31 @@ def resign_all_games(bot_headers):
                 print(f"Successfully Aborted game {game_id}")
             else:
                 print(f"Error trying to abort game {game_id}")
+
+
+def wait_until_my_move(bot_headers):
+
+    with re.get(API_URL + "/stream/event",
+                headers=bot_headers, stream=True) as response:
+
+        for line in response.iter_lines():
+            if line:
+                event = line.decode('utf-8')
+                event = json.loads(event)
+                if (event["type"] == "gameStart") and (event["game"]["isMyTurn"] == "true"):
+                    print(event)
+                    return True
+                else:
+                    print("waiting for opponent")
+            else:
+                print("keep-alive message received")
+
+
+def make_move(bot_headers, game_id, move):
+    response = re.post(API_URL + f"/bot/game/{game_id}/move/{move}",
+                       headers=bot_headers)
+    # print_pretty_json(response)
+    pass
 
 
 def main():
