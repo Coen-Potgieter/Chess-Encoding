@@ -68,7 +68,11 @@ asyncio.get_event_loop().run_until_complete(play_game())
 - Above works
 - At this stage now I should start pulling games and decoding them. 
 - Would also be nice to pull a game from a database and play the game out but ok (this wont have any practical use though, I suppose to just get bots to play any game might be cool?)
+- Can now decode a game using a pgn
+- Need to encode such that leading zeros is preserved
+    - Should thus rather work with strings
 
 ## Notes
 
 - would like to export th   e state of the game at each move but their API delays this request by 3 to 60 seconds to avoid cheating of some sort
+

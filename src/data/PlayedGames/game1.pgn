@@ -1,0 +1,22 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/SpM8o0Vz"]
+[Date "2024.10.18"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.10.18"]
+[UTCTime "19:33:57"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A00"]
+[Opening "Kádas Opening"]
+[Termination "Normal"]
+[Annotator "lichess.org"]
+
+1. h4 { A00 Kádas Opening } g6 2. Rh2 { The game is a draw. } 1/2-1/2
+
+

@@ -1,4 +1,9 @@
 {
-    "white": ["h2h4", "g2g4", "f1g2", "g2h3"],
-    "black": ["c7c6", "d8a5", "g8h6"]
+    "white": [
+        "h2h4",
+        "h1h2"
+    ],
+    "black": [
+        "g7g6"
+    ]
 }

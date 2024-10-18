@@ -46,7 +46,7 @@ def main():
             #   challenge again
             pass
 
-    moves = api.load_moves("src/data/predefinedMoves/scholarsMate.json")["white"]
+    moves = api.load_moves("src/data/predefinedMoves/game1.json")["white"]
 
     # Phase 2 once a game is started we play the game
     api.play_game(HEADERS, game_id, moves, my_colour)
