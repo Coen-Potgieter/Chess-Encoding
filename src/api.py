@@ -202,52 +202,52 @@ def play_game(bot_headers, game_id, moves, colour):
                         move_resp = make_move(bot_headers, game_id,
                                               move_to_play)
                         if move_resp.status_code == 200:
-                            print(f"I played {move_to_play} Successfully")
+                            print(f"I played {move_to_play} Successfully\n")
                             move_idx += 1
                         else:
-                            print(f"Error playing {move_to_play}")
+                            print(f"Error playing {move_to_play}\n")
                 elif game_state == "gameState":
-
-                    # first see if draw there is a draw offer
-                    if colour == Colour.WHITE:
-                        # only present when these fields are true I believe
-                        try:
-                            draw_offer = game_event["bdraw"]
-                        except KeyError:
-                            draw_offer = False
-                    else:
-                        try:
-                            draw_offer = game_event["wdraw"]
-                        except KeyError:
-                            draw_offer = False
-
-                    # if there is a draw offer then accept it
-                    if draw_offer:
-                        print("Accepting Draw")
-                        draw_accept_or_make_offer(bot_headers, game_id)
-
+                    if game_event["status"] == "mate":
+                        print(f"{game_event["winner"].title()} Won the Game!")
+                        return
+                    
                     moves_played = game_event["moves"]
                     if colour == whose_turn(moves_played):
                         print("My Turn to play")
 
                         # first check if we have moves to play,
                         #   else make draw offer
-                        if num_moves == (move_idx + 1):
-                            print("Offering Draw")
+                        if (num_moves == move_idx):
+                            print("Offering Draw\n")
                             draw_accept_or_make_offer(bot_headers, game_id)
                             return
 
                         move_to_play = moves[move_idx]
-                        move_resp = make_move(bot_headers, game_id,
-                                              move_to_play)
+                        move_resp = make_move(bot_headers, game_id, move_to_play)
                         if move_resp.status_code == 200:
-                            print(f"I played {move_to_play} Successfully")
+                            print(f"I played {move_to_play} Successfully\n")
                             move_idx += 1
                         else:
-                            print(f"Error playing {move_to_play}")
+                            print(f"Error playing {move_to_play}\n")
                     else:
-                        print("Waiting for opponent")
+                        print("Waiting for opponent...\n")
+
+                elif game_state == "chatLine":
+
+                    # This is sent when a draw is offered
+                    message = game_event["text"]
+                    user = game_event["username"]
+                    print(f"Chat line: '{message}'\nSent from '{user}'\n")
+
+                    # ensure message is sent from user 'lichess'
+                    #   and ensure it says '<colour> offers draw'
+                    if user == "lichess" and message.split(" ")[-2:] == ["offers", "draw"]:
+
+                        print("Accepting Draw")
+                        draw_accept_or_make_offer(bot_headers, game_id)
+                        return
                 else:
+                    # handles any edge cases for game_state
                     print(f"Un-handled Game State: {game_state}")
             else:
                 print("keep-alive message received")

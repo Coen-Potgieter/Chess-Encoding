@@ -63,6 +63,7 @@ asyncio.get_event_loop().run_until_complete(play_game())
 - Need to figure out workflow of now play the accepted game between the two bots
 - Need to change things, right now im polling the stream and they don't like that
 - so change workflow
+- Workflow works, draw offers update game state to ChatLine or something so change it from checking for draw offer on each turn
 
 ## Notes
 

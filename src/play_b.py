@@ -31,7 +31,7 @@ def main():
         game_id = event["id"]
         api.accept_challenge(HEADERS, game_id)
 
-    moves = api.load_moves("src/data/predefinedMoves/game1.json")["black"]
+    moves = api.load_moves("src/data/predefinedMoves/scholarsMate.json")["black"]
 
     # Phase 2 once a game is started we play the game
     api.play_game(HEADERS, game_id, moves, my_colour)
