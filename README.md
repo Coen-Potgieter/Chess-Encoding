@@ -65,6 +65,10 @@ asyncio.get_event_loop().run_until_complete(play_game())
 - so change workflow
 - Workflow works, draw offers update game state to ChatLine or something so change it from checking for draw offer on each turn
 
+- Above works
+- At this stage now I should start pulling games and decoding them. 
+- Would also be nice to pull a game from a database and play the game out but ok (this wont have any practical use though, I suppose to just get bots to play any game might be cool?)
+
 ## Notes
 
 - would like to export th   e state of the game at each move but their API delays this request by 3 to 60 seconds to avoid cheating of some sort
