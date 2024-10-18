@@ -66,4 +66,4 @@ asyncio.get_event_loop().run_until_complete(play_game())
 
 ## Notes
 
-- would like to export the state of the game at each move but their API delays this request by 3 to 60 seconds to avoid cheating of some sort
+- would like to export th   e state of the game at each move but their API delays this request by 3 to 60 seconds to avoid cheating of some sort

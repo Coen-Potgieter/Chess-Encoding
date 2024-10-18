@@ -19,14 +19,22 @@ def main():
     # for debugging
     # list_challenges()
 
+    my_colour = api.Colour.BLACK
+
     # Wait for challenge from bot A
     event = api.listen_to_events(HEADERS)
 
+    game_id = None
+
     if event["state"] == api.EventState.CHALLENGE:
         # now accept the challenge
-        api.accept_challenge(HEADERS, event["id"])
+        game_id = event["id"]
+        api.accept_challenge(HEADERS, game_id)
 
-    print(event["state"])
+    moves = api.load_moves("src/data/predefinedMoves/game1.json")["black"]
+
+    # Phase 2 once a game is started we play the game
+    api.play_game(HEADERS, game_id, moves, my_colour)
 
 
 if __name__ == "__main__":
