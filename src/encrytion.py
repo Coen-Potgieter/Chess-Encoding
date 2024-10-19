@@ -5,7 +5,7 @@ import io
 import json
 
 
-def bin_as_string(bin_num):
+def print_bin(bin_num):
     return str(bin(bin_num))[2:]
 
 
@@ -39,7 +39,7 @@ def save_game_for_bots(encoded_moves):
 
 
 def encode_chess_game(bits):
-    print("Encoding: ", bin_as_string(bits), "\n")
+    print("Encoding: ", print_bin(bits), "\n")
 
     # init a board, from starting pos
     board = chess.Board()
@@ -61,8 +61,8 @@ def encode_chess_game(bits):
         # Extract this bits from our bits to encode
         bits, info_for_move = read_x_bits(bits, num_bits)
 
-        print("Extracted bits: ", bin_as_string(info_for_move))
-        print("Leaving us with: ", bin_as_string(bits))
+        print("Extracted bits: ", print_bin(info_for_move))
+        print("Leaving us with: ", print_bin(bits))
 
         # choose move that corresponds with extracted info
         move_to_play = legal_moves[info_for_move]
@@ -77,7 +77,6 @@ def encode_chess_game(bits):
         print(board, "\n")
 
     return encoded_game
-
 
 
 def decode_chess_game(pgn):
@@ -110,9 +109,6 @@ def decode_chess_game(pgn):
         num_bits = math.floor(math.log2(num_legal_moves))
 
         info_from_move = str(bin(legal_moves.index(move_played)))[2:]
-
-        print(num_bits)
-        print(info_from_move)
         num_missing_0s = num_bits - len(info_from_move)
         for _ in range(num_missing_0s):
             print("Appending")
@@ -125,23 +121,42 @@ def decode_chess_game(pgn):
         move_idx += 1
         print(board, "\n")
 
-    # now take our packets and construct original binary
-    
-    print(bin_packets)
+    # now take our packets and reverse to construct original binary
     bin_packets.reverse()
     decoded_bits = int("".join(bin_packets), 2)
-    print(bin_as_string(decoded_bits))
+
+    return decoded_bits
+    
 
 
-def string_to_bin(input_string):
+# Returns binary number
+def my_string_encryption(input_string):
+    bit_packets = []
+    for char in input_string:
+        string_representation = str(bin(ord(char)))[2:]
+        if len(string_representation) < 8:
+            for _ in range(8 - len(string_representation)):
+                string_representation = "0" + string_representation
+        bit_packets.append(string_representation)
 
-    # This converts our string into a class `bytes`. This class is
-    #   immutable, indexable and iterable
-    byte_array = input_string.encode("utf-8")
+    bin_as_string = "".join(bit_packets)
+    encrypted_bin = int(bin_as_string, 2)
 
-    binary_string = ''.join(format(byte, '08b') for byte in byte_array)
+    return encrypted_bin
 
-    return binary_string
+
+# input must a binary number (example: `0b0101001`)
+def my_string_decrypt(bits):
+
+    message = ""
+    # start with least bytes
+    while bits > 0:
+        target_bin = bits & 0b11111111
+        message = chr(target_bin) + message
+        bits = bits >> 8
+
+    return message
+
 
 def bin_to_string(binary_string):
     # Remove the '0b' prefix if it exists
@@ -159,28 +174,19 @@ def bin_to_string(binary_string):
     
     return original_string
 
+
 def main():
-    bin_mssg = string_to_bin("Hello World")
-    print(bin_mssg)
-    print(bin_to_string(str(bin_mssg)))
-    return
-    # for i in range(1):
-    #     print(i)
-    # return
-    # game = encode_chess_game(0b101011100)
+
+    # binary_message = my_string_encryption("Hello World!")
+
+    # game = encode_chess_game(binary_message)
     # save_game_for_bots(game)
     # return
     with open("src/data/PlayedGames/game1.pgn", "r") as tf:
         pgn = tf.read()
-    decode_chess_game(pgn)
+    bits = decode_chess_game(pgn)
+    print(my_string_decrypt(bits))
     return
-    # decode_chess_game(pgn)
-    # return
-
-    save_game_to_json(game)
-
-    # legal_moves = list(board.legal_moves)
-    # print(legal_moves)
 
 
 if __name__ == "__main__":

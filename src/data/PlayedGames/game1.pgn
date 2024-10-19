@@ -1,22 +1,22 @@
 [Event "Casual correspondence game"]
-[Site "https://lichess.org/SpM8o0Vz"]
-[Date "2024.10.18"]
+[Site "https://lichess.org/sK68yffA"]
+[Date "2024.10.19"]
 [White "freeMemory1"]
 [Black "freeMemory2"]
 [Result "1/2-1/2"]
-[UTCDate "2024.10.18"]
-[UTCTime "19:33:57"]
+[UTCDate "2024.10.19"]
+[UTCTime "19:30:28"]
 [WhiteElo "2000"]
 [BlackElo "2000"]
 [WhiteTitle "BOT"]
 [BlackTitle "BOT"]
 [Variant "Standard"]
 [TimeControl "-"]
-[ECO "A00"]
-[Opening "Kádas Opening"]
+[ECO "A04"]
+[Opening "Zukertort Opening: Black Mustang Defense"]
 [Termination "Normal"]
 [Annotator "lichess.org"]
 
-1. h4 { A00 Kádas Opening } g6 2. Rh2 { The game is a draw. } 1/2-1/2
+1. Nf3 Nc6 { A04 Zukertort Opening: Black Mustang Defense } 2. Ng1 Nd4 3. h4 Nb5 4. Nh3 h6 5. g4 Na3 6. Nxa3 e6 7. Ng5 Nf6 8. h5 Bxa3 9. Rb1 Rb8 10. Ra1 Ra8 11. Nf3 Rb8 12. Rh2 Ke7 { The game is a draw. } 1/2-1/2
 
 
