@@ -91,7 +91,7 @@ def decode_chess_game(pgn):
     for move in game.mainline_moves():
         played_moves.append(move.uci())
 
-    # Then play out this game recording the bits using the same encoding scheme 
+    # Then play out this game recording the bits using the same encoding scheme
     #   as before
 
     num_moves = len(played_moves)
@@ -126,7 +126,6 @@ def decode_chess_game(pgn):
     decoded_bits = int("".join(bin_packets), 2)
 
     return decoded_bits
-    
 
 
 # Returns binary number
@@ -162,16 +161,16 @@ def bin_to_string(binary_string):
     # Remove the '0b' prefix if it exists
     if binary_string.startswith('0b'):
         binary_string = binary_string[2:]
-    
+
     # Split the binary string into chunks of 8 bits
     byte_chunks = [binary_string[i:i+8] for i in range(0, len(binary_string), 8)]
-    
+
     # Convert each 8-bit chunk to its corresponding ASCII character
     characters = [chr(int(byte, 2)) for byte in byte_chunks]
-    
+
     # Join all the characters to form the original string
     original_string = ''.join(characters)
-    
+
     return original_string
 
 
