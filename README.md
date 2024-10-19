@@ -72,6 +72,12 @@ asyncio.get_event_loop().run_until_complete(play_game())
 - Need to encode such that leading zeros is preserved
     - Should thus rather work with strings
 
+- Everything works for small case of "Hello World!"
+- Need to:
+    - Handle edge cases when games get long and only one move is available: cant store a single bit here since we cant make a choice between a 0 or 1
+    - Also when this happens we need to end that game and start a new one
+        - This adds a lot of complexity that im scared for (I wont lie)
+
 ## Notes
 
 - would like to export th   e state of the game at each move but their API delays this request by 3 to 60 seconds to avoid cheating of some sort
