@@ -3,6 +3,7 @@ import math
 import chess.pgn
 import io
 import json
+import os
 
 
 def print_bin(bin_num):
@@ -90,7 +91,7 @@ def encode_chess_game(bits):
     return games
 
 
-def decode_chess_game(pgn):
+def decode_chess_game(pgn, quiet=False):
 
     # Read pgn and get game board
     pgn_io = io.StringIO(pgn)
@@ -122,7 +123,9 @@ def decode_chess_game(pgn):
         info_from_move = str(bin(legal_moves.index(move_played)))[2:]
         num_missing_0s = num_bits - len(info_from_move)
         for _ in range(num_missing_0s):
-            print("Appending")
+
+            if not quiet:
+                print("Appending")
             info_from_move = "0" + info_from_move
 
         bin_packets.append(info_from_move)
@@ -130,7 +133,8 @@ def decode_chess_game(pgn):
         # play uci move on board to get next board config
         board.push_uci(move_played)
         move_idx += 1
-        print(board, "\n")
+        if not quiet:
+            print(board, "\n")
 
     # now take our packets and reverse to construct original binary
     bin_packets.reverse()
@@ -184,16 +188,47 @@ def bin_to_string(binary_string):
 
     return original_string
 
+def append_binary(current_bin, new_bin):
+    
+
+    curr_bin_string = print_bin(current_bin)
+    new_bin_string = print_bin(new_bin)
+    if curr_bin_string == "0":
+        new_bin = new_bin_string
+    else:
+        new_bin = curr_bin_string + new_bin_string
+
+    bin_rep = int(new_bin, 2)
+    return bin_rep
+
+def decode_games(dir_path):
+
+    png_files = []
+    for filename in os.listdir(dir_path):
+        png_files.append(filename)
+    png_files.sort() 
+
+
+    running_bits = 0;
+    for game_dir in png_files:
+        with open(f"{dir_path}/{game_dir}", "r") as tf:
+            png = tf.read()
+        bits = decode_chess_game(png, quiet=True)
+        running_bits = append_binary(running_bits, bits)
+        # print(print_bin(bits))
+        # print(bits)
+    print(my_string_decrypt(running_bits))
 
 def main():
-    
-    binary_message = my_string_encryption("""
-                                          [sgn[aousbg[oans[gba[psng[absngpajns[gkna[sogb[ajsng[jasbgpjansg[lkans[ojgna
-                                                                                                                 [oskng[oasbgn[koans[ockna[ocmx[apm[oaisjngpoiangklma[soignaoisng[oainsg[nams[ogina
-                                                                                                                                                                                              [soign[aoksmg[kn""")
-    games = encode_chess_game(binary_message)
-    save_game_for_bots(games)
 
+    # TODO: load in messages from `data/messages/message1`
+    
+    # games = encode_chess_game(binary_message)
+    # save_game_for_bots(games)
+
+    # return
+
+    decode_games("src/data/PlayedGames/message1") 
     return
     with open("src/data/PlayedGames/game1.pgn", "r") as tf:
         pgn = tf.read()

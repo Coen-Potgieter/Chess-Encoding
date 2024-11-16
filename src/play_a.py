@@ -19,37 +19,45 @@ def main():
     # for debugging
     # list_challenges()
 
-    my_colour = api.Colour.WHITE
-
     # clear all challenges and abort all ongoing games
     api.clear_all_challenges(HEADERS)
     api.resign_all_games(HEADERS)
+    my_colour = api.Colour.WHITE
 
-    game_started = False
-    game_id = None
+    loaded_games = api.load_moves("src/data/predefinedMoves/message1.json")
+    games = loaded_games.values()
 
-    # Phase 1 is getting a game started
-    while not game_started:
-        # make challenge to bot B
-        api.make_challenge(HEADERS, "freeMemory2")
+    # Cycle through each game
+    for game_idx, game in enumerate(games):
+        
+        # flags for game handling
+        game_started = False
+        game_id = None
 
-        # wait for challenge accept
-        event = api.listen_to_events(HEADERS)
-        if event["state"] == api.EventState.GAME_START:
+        # Phase 1 is getting a game started
+        while not game_started:
+            # make challenge to bot B
+            api.make_challenge(HEADERS, "freeMemory2")
 
-            # game started
-            game_id = event["id"]
-            print(f"Game {game_id} started!")
-            game_started = True
-        else:
-            # If anything is else returned other than GAME_START we make
-            #   challenge again
-            pass
+            # wait for challenge accept
+            event = api.listen_to_events(HEADERS)
+            if event["state"] == api.EventState.GAME_START:
 
-    moves = api.load_moves("src/data/predefinedMoves/game1.json")["white"]
+                # game started
+                game_id = event["id"]
+                print(f"Game {game_id} started!")
+                game_started = True
+            else:
+                # If anything is else returned other than GAME_START we make
+                #   challenge again
+                pass
 
-    # Phase 2 once a game is started we play the game
-    api.play_game(HEADERS, game_id, moves, my_colour)
+        moves_to_play = game["white"]
+
+        # Phase 2 once a game is started we play the game
+        api.play_game(HEADERS, game_id, moves_to_play, my_colour)
+
+        print(f"-------------------- Game {game_idx + 1} Completed ------------------- ")
 
 
 if __name__ == "__main__":
