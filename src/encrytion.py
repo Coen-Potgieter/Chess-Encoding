@@ -21,20 +21,24 @@ def read_x_bits(bits, x):
 
 
 def save_game_for_bots(encoded_moves):
-    white_moves = []
-    black_moves = []
+    json_to_save = {}
+    for game_idx, game in enumerate(encoded_moves):
 
-    for idx, move in enumerate(encoded_moves):
-        if idx % 2 == 0:
-            white_moves.append(move)
-        else:
-            black_moves.append(move)
+        white_moves = []
+        black_moves = []
 
-    json_to_save = {
-        "white": white_moves,
-        "black": black_moves
-    }
-    with open("src/data/predefinedMoves/game1.json", "w") as tf:
+        for idx, move in enumerate(game):
+            if idx % 2 == 0:
+                white_moves.append(move)
+            else:
+                black_moves.append(move)
+
+        json_to_save[f"Game {game_idx + 1}"] = {
+            "white": white_moves,
+            "black": black_moves
+        }
+
+    with open("src/data/predefinedMoves/message1.json", "w") as tf:
         json.dump(json_to_save, tf, indent=4)
 
 
@@ -43,16 +47,24 @@ def encode_chess_game(bits):
 
     # init a board, from starting pos
     board = chess.Board()
+
     # create a list to store game in uci moves
     encoded_game = []
-    # print(str(bits))
-    # return
+    # create a list to hold all the encoded games (in case multiple games are needed to encode a message)
+    games = []
     while bits > 0:
         # get all legal moves from given board config
         legal_moves = [move.uci() for move in list(board.legal_moves)]
 
         # get number of legal moves (-1 for legal indices)
         num_moves = len(legal_moves) - 1
+        
+        # If less than two available moves, then new game since we need at least 2 moves to encode binary 1 or 0
+        if num_moves <= 1:
+            board = chess.Board()
+            games.append(encoded_game)
+            encoded_game = []
+            continue
 
         # number of bits a given move in this position can store
         num_bits = math.floor(math.log2(num_moves))
@@ -75,8 +87,9 @@ def encode_chess_game(bits):
         # Play the move
         board.push_uci(move_to_play)
         print(board, "\n")
-
-    return encoded_game
+    
+    games.append(encoded_game)
+    return games
 
 
 def decode_chess_game(pgn):
@@ -176,11 +189,11 @@ def bin_to_string(binary_string):
 
 def main():
 
-    # binary_message = my_string_encryption("Hello World!")
+    binary_message = my_string_encryption("Hello World!")
 
-    # game = encode_chess_game(binary_message)
-    # save_game_for_bots(game)
-    # return
+    games = encode_chess_game(binary_message)
+    save_game_for_bots(games)
+    return
     with open("src/data/PlayedGames/game1.pgn", "r") as tf:
         pgn = tf.read()
     bits = decode_chess_game(pgn)
