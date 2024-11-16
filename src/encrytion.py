@@ -23,20 +23,18 @@ def read_x_bits(bits, x):
 def save_game_for_bots(encoded_moves):
     json_to_save = {}
     for game_idx, game in enumerate(encoded_moves):
-
         white_moves = []
         black_moves = []
-
         for idx, move in enumerate(game):
             if idx % 2 == 0:
                 white_moves.append(move)
             else:
                 black_moves.append(move)
 
-        json_to_save[f"Game {game_idx + 1}"] = {
-            "white": white_moves,
-            "black": black_moves
-        }
+                json_to_save[f"Game {game_idx + 1}"] = {
+                        "white": white_moves,
+                        "black": black_moves
+                        }
 
     with open("src/data/predefinedMoves/message1.json", "w") as tf:
         json.dump(json_to_save, tf, indent=4)
@@ -188,11 +186,14 @@ def bin_to_string(binary_string):
 
 
 def main():
-
-    binary_message = my_string_encryption("Hello World!")
-
+    
+    binary_message = my_string_encryption("""
+                                          [sgn[aousbg[oans[gba[psng[absngpajns[gkna[sogb[ajsng[jasbgpjansg[lkans[ojgna
+                                                                                                                 [oskng[oasbgn[koans[ockna[ocmx[apm[oaisjngpoiangklma[soignaoisng[oainsg[nams[ogina
+                                                                                                                                                                                              [soign[aoksmg[kn""")
     games = encode_chess_game(binary_message)
     save_game_for_bots(games)
+
     return
     with open("src/data/PlayedGames/game1.pgn", "r") as tf:
         pgn = tf.read()
