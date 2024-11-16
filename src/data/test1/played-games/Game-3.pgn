@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/NFNXXDIE"]
+[Date "2024.11.16"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.16"]
+[UTCTime "19:52:32"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A00"]
+[Termination "Normal"]
+
+1. c3 e6 2. b3 Qf6 3. h3 Kd8 4. f3 Qg5 5. Na3 Qxd2+ 6. Kxd2 Be7 7. Bb2 Nc6 8. Qc1 Bg5+ 9. Kd1 Ke8 10. Qd2 h5 11. Nc4 Nce7 12. Nb6 Be3 13. Qxd7+ 1/2-1/2
+
+

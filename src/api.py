@@ -99,8 +99,11 @@ def handle_event(event):
                 "my_turn": event["game"]["isMyTurn"]}
     elif event_type == "challengeDeclined":
         return {"state": EventState.GAME_DECLINED}
+    elif event_type == "gameFinish":
+        return {"state": EventState.GAME_FINISH}
     else:
-        # print(event_type)
+        # To log unexpected behaviour
+        print(event_type)
         return event_type
 
 
@@ -258,6 +261,27 @@ def make_move(bot_headers, game_id, move):
                        headers=bot_headers)
     return response
 
+def load_single_game_by_id(id):
+    response = re.post(API_URL + "/games/export/_ids",
+                       data=id)
+    return response
+
+
+# give in a dict of pgn ids, and a save loacation and this file will export the 
+#   game from lichess and create new file in directory
+def get_pgns_by_id(ids_dict, dir_to_save):
+
+    for key, val in ids_dict.items():
+        resp = load_single_game_by_id(val)
+        if resp.status_code == 200:
+
+            # Key has space, but i dont like that so im changing to "-" instead of " "
+            key = key.replace(" ", "-") 
+            with open(dir_to_save + f"/{key}.pgn", "w") as tf:
+                tf.write(resp.text)
+        else:
+            print("Loading of Game ID: ", val, " Failed")
+        
 
 def main():
 

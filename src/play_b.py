@@ -22,7 +22,7 @@ def main():
     my_colour = api.Colour.BLACK
 
 
-    loaded_games = api.load_moves("src/data/predefinedMoves/message1.json")
+    loaded_games = api.load_moves("src/data/test1/predefined-moves/moves.json")
     games = loaded_games.values()
     for game_idx, game in enumerate(games):
         game_id = None

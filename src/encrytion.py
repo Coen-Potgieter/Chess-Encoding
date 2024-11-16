@@ -21,7 +21,7 @@ def read_x_bits(bits, x):
     return bits >> x, bits & mask
 
 
-def save_game_for_bots(encoded_moves):
+def save_game_for_bots(encoded_moves, path_to_save):
     json_to_save = {}
     for game_idx, game in enumerate(encoded_moves):
         white_moves = []
@@ -37,12 +37,13 @@ def save_game_for_bots(encoded_moves):
                         "black": black_moves
                         }
 
-    with open("src/data/predefinedMoves/message1.json", "w") as tf:
+    with open(path_to_save, "w") as tf:
         json.dump(json_to_save, tf, indent=4)
 
 
+# Encodes a string variable of bits
 def encode_chess_game(bits):
-    print("Encoding: ", print_bin(bits), "\n")
+    print("Encoding: ", bits, "\n")
 
     # init a board, from starting pos
     board = chess.Board()
@@ -51,7 +52,7 @@ def encode_chess_game(bits):
     encoded_game = []
     # create a list to hold all the encoded games (in case multiple games are needed to encode a message)
     games = []
-    while bits > 0:
+    while len(bits) > 0:
         # get all legal moves from given board config
         legal_moves = [move.uci() for move in list(board.legal_moves)]
 
@@ -68,15 +69,15 @@ def encode_chess_game(bits):
         # number of bits a given move in this position can store
         num_bits = math.floor(math.log2(num_moves))
         print("Number of bits to extract: ", num_bits)
+        
+        info_for_move = bits[:num_bits]
+        bits = bits[num_bits:]
 
-        # Extract this bits from our bits to encode
-        bits, info_for_move = read_x_bits(bits, num_bits)
-
-        print("Extracted bits: ", print_bin(info_for_move))
-        print("Leaving us with: ", print_bin(bits))
+        print("Extracted bits: ", info_for_move)
+        print("Leaving us with: ", bits)
 
         # choose move that corresponds with extracted info
-        move_to_play = legal_moves[info_for_move]
+        move_to_play = legal_moves[int(info_for_move, 2)]
         print("Thus, from the legal moves: ", legal_moves)
         print("We choose move: ", move_to_play)
 
@@ -259,28 +260,23 @@ def bin_to_secret(bin_secret):
     return running_secret
 
 
-def encode_secret(path_to_secret):
+def encode_secret(path_to_dir):
     
-    with open(path_to_secret, "r") as tf:
+    with open(path_to_dir + "/secret.txt", "r") as tf:
         secret_string = tf.read()
     
 
     bin_secret = secret_to_bin(secret_string)   
+    games = encode_chess_game(bin_secret) 
+    save_game_for_bots(games, path_to_save=path_to_dir + "/predefined-moves/moves.json")
 
 
-    # TODO take out this functionallity, using this to ensure things work
-    with open("src/data/message1/secret-bin-repr.txt", "w") as tf:
-        tf.write(bin_secret)
 
 
 def main():
     
-    # encode_secret("src/data/message1/secret.txt")
+    encode_secret("src/data/test1")
 
-    with open("src/data/message1/secret-bin-repr.txt", "r") as tf:
-        bin_secret = tf.read()
-    myString = bin_to_secret(bin_secret)
-    print(myString)
     return 
     # games = encode_chess_game(binary_message)
     # save_game_for_bots(games)

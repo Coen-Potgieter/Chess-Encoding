@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/rSdbMs2B"]
+[Date "2024.11.16"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.16"]
+[UTCTime "19:54:29"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A01"]
+[Termination "Normal"]
+
+1. b3 Nh6 2. g4 Nxg4 3. h4 Nf6 4. h5 Rg8 5. d3 Nd5 6. Bd2 h6 7. Bg2 b6 8. Rh3 Nc6 9. a3 Rb8 10. b4 Ra8 11. Bf4 Nd4 12. Kf1 Ne3+ 13. Bxe3 Ne6 14. Nf3 Bb7 15. Ra2 Rc8 16. Qe1 d6 17. Bxb6 cxb6 18. Nh4 Ba6 19. Qd2 Ng5 20. b5 Rc5 21. Qxg5 Bxb5 22. Qf4 g5 23. Nf3 Bc4 24. Qd4 b5 25. Ne1 Qd7 26. Qh4 Rd5 27. Bf3 Rg7 28. Bh1 Qb7 29. Be4 Qc7 30. Rh1 Rg6 31. Rg1 Qb6 32. dxc4 Qd4 33. Rg2 Qc3 34. Qg4 Qxa3 35. Rg3 Rd4 36. Rf3 Rg7 37. Rh3 Qa4 38. Rh1 Qb4 39. Ra3 Rd2 40. Qh3 Rh7 41. Rd3 Qc3 42. Rxd6 Qh8 43. Bf5 Rxc2 44. Bd3 Rb2 45. Qe3 Rxb1 46. Qxg5 Rb3 47. Qg6 Qa1 48. Rg1 Qh8 49. Qg3 Qf6 50. Qf4 Qxd6 51. Qf5 bxc4 52. Rg8 Qf4 53. Qf6 Qe3 54. Qd4 Qc1 55. Qf6 e6 56. Qe5 Qb1 57. Qxe6+ 1/2-1/2
+
+
