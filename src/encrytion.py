@@ -92,7 +92,7 @@ def encode_chess_game(bits):
     return games
 
 
-def decode_chess_game(pgn, quiet=False):
+def decode_single_chess_game(pgn, quiet=False):
 
     # Read pgn and get game board
     pgn_io = io.StringIO(pgn)
@@ -121,12 +121,14 @@ def decode_chess_game(pgn, quiet=False):
         # number of bits we are going to decode
         num_bits = math.floor(math.log2(num_legal_moves))
 
+        # Use idx of possible moves and move played to figure out bits
         info_from_move = str(bin(legal_moves.index(move_played)))[2:]
+        # Ensure we keep bit length in tact by pre-padding with 0s
         num_missing_0s = num_bits - len(info_from_move)
         for _ in range(num_missing_0s):
 
             if not quiet:
-                print("Appending")
+                print("Pre-padding")
             info_from_move = "0" + info_from_move
 
         bin_packets.append(info_from_move)
@@ -137,9 +139,7 @@ def decode_chess_game(pgn, quiet=False):
         if not quiet:
             print(board, "\n")
 
-    # now take our packets and reverse to construct original binary
-    bin_packets.reverse()
-    decoded_bits = int("".join(bin_packets), 2)
+    decoded_bits = "".join(bin_packets)
 
     return decoded_bits
 
@@ -202,23 +202,6 @@ def append_binary(current_bin, new_bin):
     bin_rep = int(new_bin, 2)
     return bin_rep
 
-def decode_games(dir_path):
-
-    png_files = []
-    for filename in os.listdir(dir_path):
-        png_files.append(filename)
-    png_files.sort() 
-
-
-    running_bits = 0;
-    for game_dir in png_files:
-        with open(f"{dir_path}/{game_dir}", "r") as tf:
-            png = tf.read()
-        bits = decode_chess_game(png, quiet=True)
-        running_bits = append_binary(running_bits, bits)
-        # print(print_bin(bits))
-        # print(bits)
-    print(my_string_decrypt(running_bits))
 
 
 
@@ -271,12 +254,31 @@ def encode_secret(path_to_dir):
     save_game_for_bots(games, path_to_save=path_to_dir + "/predefined-moves/moves.json")
 
 
+def decode_pgns(dir_path):
 
+    pgn_files = []
+    for filename in os.listdir(dir_path):
+        pgn_files.append(filename)
+
+    pgn_files.remove("ids.json")
+
+    # This line is from chatGPT
+    pgn_files = sorted(pgn_files, key=lambda x: int(x.split('-')[1].split('.')[0]))
+
+    running_bits = "";
+    for game_dir in pgn_files:
+        with open(f"{dir_path}/{game_dir}", "r") as tf:
+            pgn = tf.read()
+        running_bits += decode_single_chess_game(pgn, quiet=True)
+
+    original_message = bin_to_secret(running_bits)
+    print(original_message)
 
 def main():
     
-    encode_secret("src/data/test1")
-
+    # encode_secret("src/data/test1")
+    
+    decode_pgns("src/data/test1/played-games")
     return 
     # games = encode_chess_game(binary_message)
     # save_game_for_bots(games)
