@@ -6,10 +6,6 @@ import json
 import os
 
 
-def print_bin(bin_num):
-    return str(bin(bin_num))[2:]
-
-
 def legal_moves_from_given_board_config(board, fen):
     board.set_fen(fen)
     print(board)
@@ -225,15 +221,6 @@ def main():
     
     # encode_secret("src/data/test3")
     decode_pgns("src/data/test3")
-
-    # target_bits = convert_jpeg_to_bits("src/data/imgTest/secret.jpeg") 
-    # create_jpeg_from_bits(target_bits, "src/data/imgTest/outp.jpeg") 
-
-
-    # jpeg_bits = convert_jpeg_to_bits("src/data/imgTest/secret.jpeg")
-    # with open("src/data/imgTest/bit-rep.txt", "r") as tf:
-    #     bits = tf.read()
-    # create_jpeg_from_bits(bits, "src/data/imgTest/outp.jpeg")
 
 if __name__ == "__main__":
     main()

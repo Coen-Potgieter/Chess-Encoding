@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/Eyic8961"]
+[Date "2024.11.17"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.17"]
+[UTCTime "18:20:55"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A00"]
+[Termination "Normal"]
+
+1. g4 Nc6 2. h4 Na5 3. a3 Nh6 4. c3 c6 5. f3 Qc7 6. a4 Qd8 7. c4 Nf5 8. Ra3 Rg8 9. Qb3 g6 10. Nh3 Qb6 11. Qd3 Qb5 1/2-1/2
+
+

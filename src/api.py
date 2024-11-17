@@ -64,6 +64,7 @@ def get_ongoing_games(bot_headers):
     return response
 
 
+# Helper function used for debugging
 def print_pretty_json(response):
     print(response.status_code)
     print(json.dumps(response.json(), indent=4))
