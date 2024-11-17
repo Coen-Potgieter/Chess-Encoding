@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/csPlmNhG"]
+[Date "2024.11.17"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.17"]
+[UTCTime "08:27:58"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A00"]
+[Termination "Normal"]
+
+1. f3 Nh6 2. Nh3 Rg8 3. Ng5 Rh8 4. Nxh7 b6 5. Nxf8 Rg8 6. Nh7 Rh8 7. Nf8 Rg8 8. Nh7 Rh8 9. Nf8 1/2-1/2
+
+

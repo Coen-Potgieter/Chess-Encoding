@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/850AmzX0"]
+[Date "2024.11.17"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.17"]
+[UTCTime "08:28:24"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A00"]
+[Termination "Normal"]
+
+1. c3 Nh6 2. f3 Rg8 3. h3 Rh8 4. e3 Rg8 5. Qc2 Nc6 6. Qa4 Rh8 7. Na3 Rb8 8. Nc4 Ng8 9. f4 Nd4 10. Rh2 g6 11. Na5 Bg7 12. Qxd7+ Kxd7 13. Nxb7 Nb3 14. Nxd8 h5 15. Ne6 Bxc3 16. Rh1 Rb6 17. Bd3 Rh6 18. e4 Rh8 19. Bb5+ Kd6 20. axb3 Nf6 21. Bd7 Ng4 22. Bxc8 Ba5 23. Nd8 Rg8 24. Bd7 Rb7 25. Bc8 Bb4 26. Bd7 Nh2 27. Be8 Rh8 28. Ba4 Rh7 29. Bd7 Bc5 30. Be8 Rb4 31. Bb5 Rxb5 32. Nc6 Bb4 33. Na5 Rh8 34. Kf2 Nf1 35. Ra4 Kd7 36. Ra1 Rd8 37. Nb7 Ra8 38. Nc5+ Kd8 39. Rh2 Kc8 40. Ke1 Kb8 41. Ke2 Kc8 42. Ra6 Ba5 43. Re6 Bb6 44. Rh1 Ng3+ 45. Kf2 Nxe4+ 46. Ke3 Nxc5 47. Rxg6 Na6+ 48. Ke4 Bd4 49. Rxa6 Rd5 50. Ra5 f6 51. Kxd5 Bf2 52. Kc6 Bc5 53. Rh2 Be3 54. Rh1 Bxf4 55. Rb5 Kd8 56. Kb7 Rc8 57. Kc6 Be3 58. Kb7 Bf4 59. Rxh5 Bg3 60. Rh7 Bh2 61. Rh6 Bd6 62. Rh8+ 1/2-1/2
+
+

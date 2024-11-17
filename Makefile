@@ -3,6 +3,9 @@ init:
 	pip install -r requirements.txt
 
 run:
+	python3 src/main.py
+
+encr:
 	python3 src/encrytion.py
 
 api: 

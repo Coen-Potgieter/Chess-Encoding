@@ -274,11 +274,11 @@ def get_pgns_by_id(ids_dict, dir_to_save):
     for key, val in ids_dict.items():
         resp = load_single_game_by_id(val)
         if resp.status_code == 200:
-
             # Key has space, but i dont like that so im changing to "-" instead of " "
             key = key.replace(" ", "-") 
             with open(dir_to_save + f"/{key}.pgn", "w") as tf:
                 tf.write(resp.text)
+            print(key + " Loaded and Saved") 
         else:
             print("Loading of Game ID: ", val, " Failed")
         

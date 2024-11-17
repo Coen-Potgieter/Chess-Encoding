@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/vvSCtnvG"]
+[Date "2024.11.17"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.17"]
+[UTCTime "08:27:50"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A00"]
+[Termination "Normal"]
+
+1. Nh3 Nh6 2. e3 g6 3. Ke2 Nc6 4. Ng5 Ne5 5. Nxh7 Rg8 6. Nf6+ 1/2-1/2
+
+

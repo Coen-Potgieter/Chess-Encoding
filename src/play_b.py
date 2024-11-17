@@ -2,6 +2,7 @@ import api
 import dotenv
 import os
 import sys
+import time
 
 dotenv.load_dotenv()
 
@@ -14,7 +15,7 @@ def list_challenges():
     sys.exit()
 
 
-def main():
+def play_out_games(path_to_dir):
 
     # for debugging
     # list_challenges()
@@ -22,7 +23,7 @@ def main():
     my_colour = api.Colour.BLACK
 
 
-    loaded_games = api.load_moves("src/data/test1/predefined-moves/moves.json")
+    loaded_games = api.load_moves(path_to_dir + "/predefined-moves/moves.json")
     games = loaded_games.values()
     for game_idx, game in enumerate(games):
         game_id = None
@@ -41,6 +42,17 @@ def main():
         api.play_game(HEADERS, game_id, moves_to_play, my_colour)
         
         print(f"-------------------- Game {game_idx + 1} Completed ------------------- ")
+
+
+def main():
+
+    start = time.time()
+    play_out_games("src/data/imgTest")
+    end = time.time()
+    print(f"Encoding Took {end - start}s")
+
+
+
 
 if __name__ == "__main__":
     main()

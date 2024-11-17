@@ -14,17 +14,20 @@ def list_challenges():
     api.print_pretty_json(api.list_challenges(HEADERS))
     sys.exit()
 
-def play_out_games(path_to_json, path_to_save_ids):
+def play_out_games(path_to_dir):
 
     # for debugging
     # list_challenges()
+
+    path_to_predefined_moves = path_to_dir + "/predefined-moves/moves.json"
+    path_to_save_ids = path_to_dir + "/played-games/ids.json"
 
     # clear all challenges and abort all ongoing games
     api.clear_all_challenges(HEADERS)
     api.resign_all_games(HEADERS)
     my_colour = api.Colour.WHITE
 
-    loaded_games = api.load_moves(path_to_json)
+    loaded_games = api.load_moves(path_to_predefined_moves)
     games = loaded_games.values()
     ids_of_played_games = {}
     # Cycle through each game
@@ -65,16 +68,19 @@ def play_out_games(path_to_json, path_to_save_ids):
         json.dump(ids_of_played_games, tf, indent=4)
 
 
-def load_played_games(dir_of_ids):
-    with open(dir_of_ids + "/ids.json", "r") as tf:
+def load_played_games(path_to_dir):
+
+    working_dir = path_to_dir + "/played-games"
+    with open(working_dir + "/ids.json", "r") as tf:
         game_ids = json.load(tf)
 
-    api.get_pgns_by_id(game_ids, dir_of_ids)
+    api.get_pgns_by_id(game_ids, dir_to_save=working_dir)
     return
 
 def main():
-    # play_out_games("src/data/test1/predefined-moves/moves.json", "src/data/test1/played-games/ids.json")
-    load_played_games("src/data/test1/played-games")
+
+    # play_out_games("src/data/imgTest")
+    load_played_games("src/data/imgTest")
 
     
 

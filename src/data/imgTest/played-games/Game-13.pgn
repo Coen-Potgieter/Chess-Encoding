@@ -1,11 +1,11 @@
 [Event "Casual correspondence game"]
-[Site "https://lichess.org/dXpioKe4"]
-[Date "2024.10.18"]
+[Site "https://lichess.org/3i307uvt"]
+[Date "2024.11.17"]
 [White "freeMemory1"]
 [Black "freeMemory2"]
 [Result "1/2-1/2"]
-[UTCDate "2024.10.18"]
-[UTCTime "14:50:58"]
+[UTCDate "2024.11.17"]
+[UTCTime "08:31:47"]
 [WhiteElo "2000"]
 [BlackElo "2000"]
 [WhiteTitle "BOT"]
@@ -13,10 +13,8 @@
 [Variant "Standard"]
 [TimeControl "-"]
 [ECO "A00"]
-[Opening "Kádas Opening"]
 [Termination "Normal"]
-[Annotator "lichess.org"]
 
-1. h4 { A00 Kádas Opening } c6 2. g4 Qa5 3. Bg2 Nh6 4. Bh3 { The game is a draw. } 1/2-1/2
+1. g3 d6 2. Nc3 Bd7 3. Nd5 Na6 4. Nxe7 Kxe7 5. Nh3 Kf6 6. Ng5 Ne7 7. Nxh7+ Kg6 8. Nxf8+ Kh6 9. Nh7 Rg8 10. Nf8 Rh8 11. Nh7 Rg8 12. Nf8 Rh8 1/2-1/2
 
 

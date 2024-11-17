@@ -4,6 +4,7 @@ import chess.pgn
 import io
 import json
 import os
+import custom_errors as myErrors
 
 
 def print_bin(bin_num):
@@ -13,12 +14,6 @@ def print_bin(bin_num):
 def legal_moves_from_given_board_config(board, fen):
     board.set_fen(fen)
     print(board)
-
-
-def read_x_bits(bits, x):
-
-    mask = (0b1 << x) - 1
-    return bits >> x, bits & mask
 
 
 def save_game_for_bots(encoded_moves, path_to_save):
@@ -144,67 +139,6 @@ def decode_single_chess_game(pgn, quiet=False):
     return decoded_bits
 
 
-# Returns binary number
-def my_string_to_bin(input_string):
-    bit_packets = []
-    for char in input_string:
-        string_representation = str(bin(ord(char)))[2:]
-        if len(string_representation) < 8:
-            for _ in range(8 - len(string_representation)):
-                string_representation = "0" + string_representation
-        bit_packets.append(string_representation)
-
-    bin_as_string = "".join(bit_packets)
-    encrypted_bin = int(bin_as_string, 2)
-
-    return encrypted_bin
-
-
-# input must a binary number (example: `0b0101001`)
-def my_bin_to_string(bits):
-
-    message = ""
-    # start with least bytes
-    while bits > 0:
-        target_bin = bits & 0b11111111
-        message = chr(target_bin) + message
-        bits = bits >> 8
-
-    return message
-
-
-def bin_to_string(binary_string):
-    # Remove the '0b' prefix if it exists
-    if binary_string.startswith('0b'):
-        binary_string = binary_string[2:]
-
-    # Split the binary string into chunks of 8 bits
-    byte_chunks = [binary_string[i:i+8] for i in range(0, len(binary_string), 8)]
-
-    # Convert each 8-bit chunk to its corresponding ASCII character
-    characters = [chr(int(byte, 2)) for byte in byte_chunks]
-
-    # Join all the characters to form the original string
-    original_string = ''.join(characters)
-
-    return original_string
-
-def append_binary(current_bin, new_bin):
-    
-
-    curr_bin_string = print_bin(current_bin)
-    new_bin_string = print_bin(new_bin)
-    if curr_bin_string == "0":
-        new_bin = new_bin_string
-    else:
-        new_bin = curr_bin_string + new_bin_string
-
-    bin_rep = int(new_bin, 2)
-    return bin_rep
-
-
-
-
 # Converts a string message into binary numbers as a string type
 def secret_to_bin(secret_mssg):
     bin_representation = ""
@@ -243,21 +177,44 @@ def bin_to_secret(bin_secret):
     return running_secret
 
 
+# Takes in path to a directory and converts `secret` file to a chess game and saves the games
 def encode_secret(path_to_dir):
     
-    with open(path_to_dir + "/secret.txt", "r") as tf:
-        secret_string = tf.read()
-    
+    # Check whether we are encoding a .txt file or a .png file
+    files = os.listdir(path_to_dir)
 
-    bin_secret = secret_to_bin(secret_string)   
+    # Error handling for valid secret file
+    try: 
+        decoding_txt = True
+        if "secret.txt" in files:
+            decoding_txt = True
+        elif "secret.jpeg" in files:
+            decoding_txt = False
+        else:
+            raise myErrors.InvalidFileError("Valid file to encode not found | target file must be either `secret.txt` or `secret.jpeg`")
+    except myErrors.InvalidFileError as e:
+        print(e)
+        raise
+        
+    # Convert Secret to bits
+    if decoding_txt:
+        with open(path_to_dir + "/secret.txt", "r") as tf:
+            secret_string = tf.read()
+        bin_secret = secret_to_bin(secret_string)   
+    else:
+        bin_secret = convert_jpeg_to_bits(path_to_dir + "/secret.jpeg")
+
+    # Convert bits string to a chess game
     games = encode_chess_game(bin_secret) 
     save_game_for_bots(games, path_to_save=path_to_dir + "/predefined-moves/moves.json")
 
 
 def decode_pgns(dir_path):
+    
 
+    pgn_dir_path = dir_path + "/played-games"
     pgn_files = []
-    for filename in os.listdir(dir_path):
+    for filename in os.listdir(pgn_dir_path):
         pgn_files.append(filename)
 
     pgn_files.remove("ids.json")
@@ -267,32 +224,76 @@ def decode_pgns(dir_path):
 
     running_bits = "";
     for game_dir in pgn_files:
-        with open(f"{dir_path}/{game_dir}", "r") as tf:
+        with open(f"{pgn_dir_path}/{game_dir}", "r") as tf:
             pgn = tf.read()
         running_bits += decode_single_chess_game(pgn, quiet=True)
+    
 
-    original_message = bin_to_secret(running_bits)
-    print(original_message)
+    # Convert bits to secret and output in directory
+    # Maybe add separate directory for output?
+    files = os.listdir(dir_path)
+    if "secret.txt" in files:
+        original_message = bin_to_secret(running_bits)
+        with open(dir_path + "/outp.txt", "w") as tf:
+            tf.write(original_message)
+    else:
+        create_jpeg_from_bits(running_bits, dir_path + "/outp.jpeg") 
+
+
+# Takes in a path to a jpeg and returns a string of bits that represent the image
+def convert_jpeg_to_bits(path_to_jpeg):
+
+    running_bits = ""
+
+    # Read in image as "rb" mode
+    with open(path_to_jpeg, "rb") as file:
+        # Read in single byte
+        byte = file.read(1)
+        while byte:
+            # convert bytes to int
+            int_bytes = int.from_bytes(byte)
+
+            #convert to string representation ensuring 8 bit-width using pre-padding
+            str_bits = str(bin(int_bytes))[2:]
+            num_bits = len(str_bits)
+            needed_0s = 8 - num_bits
+            for _ in range(needed_0s):
+                str_bits = "0" + str_bits
+            
+            # Add to running bits
+            running_bits += str_bits
+            # Read in Next byte
+            byte = file.read(1) 
+
+    return running_bits
+
+# Takes in a string type of bits, creates a jpeg image and saves it to given file
+def create_jpeg_from_bits(bits, save_path):
+
+    # Ensure bit string is a multiple of 8
+    if len(bits) % 8 != 0:
+        print("Given bits are invalid")
+        return
+
+    with open(save_path, "wb") as file:
+        for i in range(0, len(bits), 8):
+            byte = bits[i:i+8]
+            byte_int = int(byte, 2)
+            file.write(bytes([byte_int]))
+    return
 
 def main():
     
-    # encode_secret("src/data/test1")
-    
-    decode_pgns("src/data/test1/played-games")
-    return 
-    # games = encode_chess_game(binary_message)
-    # save_game_for_bots(games)
+    # encode_secret("src/data/imgTest")
+    decode_pgns("src/data/imgTest")
 
-    # return
 
-    decode_games("src/data/PlayedGames/message1") 
-    return
-    with open("src/data/PlayedGames/game1.pgn", "r") as tf:
-        pgn = tf.read()
-        bits = decode_chess_game(pgn)
-        print(my_string_decrypt(bits))
-        return
-
+    # jpeg_bits = convert_jpeg_to_bits("src/data/imgTest/secret.jpeg")
+    # with open("src/data/imgTest/bit-rep.txt", "r") as tf:
+    #     bits = tf.read()
+    # create_jpeg_from_bits(bits, "src/data/imgTest/outp.jpeg")
 
 if __name__ == "__main__":
     main()
+
+
