@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/HDrM27ee"]
+[Date "2024.11.17"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.17"]
+[UTCTime "12:27:30"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A01"]
+[Termination "Normal"]
+
+1. b3 f5 2. e3 Nh6 3. Qe2 d6 4. Bb2 e6 5. e4 Be7 6. Nf3 Nf7 7. Qc4 Bg5 8. Qa4+ Bd7 9. Qc4 Bc6 10. Nd4 Qf6 11. Qxe6+ Kd8 12. Qd5 Bxd5 13. h4 Rg8 14. h5 Bxd2+ 15. Ke2 Qe7 16. Rh4 Nc6 17. Nf3 Bg5 18. Rh3 Qe8 19. Ne1 Qf8 20. Rf3 1/2-1/2
+
+

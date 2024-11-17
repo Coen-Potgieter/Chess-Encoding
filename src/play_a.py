@@ -79,8 +79,8 @@ def load_played_games(path_to_dir):
 
 def main():
 
-    # play_out_games("src/data/imgTest")
-    load_played_games("src/data/imgTest")
+    # play_out_games("src/data/test3")
+    load_played_games("src/data/test3")
 
     
 

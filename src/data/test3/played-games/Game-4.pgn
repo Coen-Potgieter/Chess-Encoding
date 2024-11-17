@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/8Hcmt95H"]
+[Date "2024.11.17"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.17"]
+[UTCTime "12:25:36"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A00"]
+[Termination "Normal"]
+
+1. Na3 Nc6 2. Nh3 Rb8 3. Rb1 Na5 4. f4 f6 5. Nb5 Ra8 6. Nf2 Nc4 7. g3 Na3 8. Nd4 Nc4 9. g4 Nd6 10. h3 Nf7 11. Nd3 Rb8 12. Ne5 g6 13. Nec6 Ra8 14. Nxa7 Rb8 15. f5 Ra8 16. Kf2 Bg7 17. Rh2 Ng5 18. Ne6 Bh6 19. Nxc7+ Kf8 20. Ncb5 Nxh3+ 21. Kg2 Qe8 22. Nc3 Qd8 23. Rh1 Qe8 24. Ne4 Qf7 25. Nb5 Ra7 26. Nc7 Bg7 27. Qe1 Ra5 28. c3 Ra8 29. Nxf6 Bh6 30. fxg6 Bxd2 31. Kh2 Qxg6 32. Kg2 Qxg4+ 33. Nxg4 Ng1 34. Ne3 Bxc3 35. Bd2 Ra4 36. Rd1 Rxa2 37. Kf2 Bg7 38. Rxg1 Rxb2 39. Ncd5 Nf6 40. Ng4 Rb6 41. Ba5 Re6 42. Nc7 Re5 43. Kg3 Rg5 44. Bd2 Nxg4 45. Bxg5 Kg8 46. Be3 Be5+ 47. Kh4 Bb2 48. Bd4 Ba3 49. Bc3 Bb2 50. Kg5 Ne5 51. Na6 Kf7 52. Bxb2 Ng6 53. Qg3 Rg8 54. Bh8 Ke6 55. Qg4+ 1/2-1/2
+
+

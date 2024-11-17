@@ -47,7 +47,7 @@ def play_out_games(path_to_dir):
 def main():
 
     start = time.time()
-    play_out_games("src/data/imgTest")
+    play_out_games("src/data/test3")
     end = time.time()
     print(f"Encoding Took {end - start}s")
 

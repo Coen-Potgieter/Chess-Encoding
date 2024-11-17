@@ -1,0 +1,20 @@
+[Event "Casual correspondence game"]
+[Site "https://lichess.org/QPYPd5x2"]
+[Date "2024.11.17"]
+[White "freeMemory1"]
+[Black "freeMemory2"]
+[Result "1/2-1/2"]
+[UTCDate "2024.11.17"]
+[UTCTime "12:24:03"]
+[WhiteElo "2000"]
+[BlackElo "2000"]
+[WhiteTitle "BOT"]
+[BlackTitle "BOT"]
+[Variant "Standard"]
+[TimeControl "-"]
+[ECO "A00"]
+[Termination "Normal"]
+
+1. g4 h6 2. b3 c6 3. e3 d6 4. Ba3 Qd7 5. Bc4 Rh7 6. Bc1 g6 7. Qf3 Na6 8. Nh3 Bg7 9. Qe2 Qe6 10. Bb5 f6 11. Rg1 Qe5 12. Qd1 Rb8 13. Ba4 Bf5 14. Rh1 Be6 15. Bb2 Qe4 16. Bc3 Qf3 17. Bd4 Ra8 18. Nf4 Bd7 19. Be5 Qg3 20. Ne6 Qxh2 21. Rf1 Rd8 22. Qf3 Ra8 23. Ng5 Nb8 24. Ne4 fxe5 25. Ng5 Qh5 26. Rh1 Nf6 27. Qe4 Bxg4 28. Rf1 Nxe4 29. Nh3 Kd7 30. Bb5 a6 31. Nf4 cxb5 32. Rg1 Nc5 33. Kf1 Ne6 34. Nc3 Nxf4 35. Nb1 Bh3+ 1/2-1/2
+
+
