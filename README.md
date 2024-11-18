@@ -1,84 +1,67 @@
-# Chess-Encoding
 
+# Usage
 
-## Resources
+Follow these steps to encrypt and decrypt a message using chess games:
 
-- python-chess docs: [python-chess: a chess library for Python — python-chess 1.10.0 documentation](https://python-chess.readthedocs.io/en/latest/)
-- lichess API docs: [Lichess.org API reference](https://lichess.org/api#tag/Challenges/operation/challengeAccept)
+### 1. Install necessary dependencies  
 
+- Run the following command to set up the required dependencies:  
+	```bash  
+	make init  
+	``` 
 
-## things learnt
+### 2. Set up necessary directories  
 
-### Web sockets
+- Create a directory structure in `src/data/` for your specific folder:  
+	```bash  
+	make setup <folder_name>  
+	```  
 
-- WebSockets provide bi-directional, real-time communication channel between a client (my bots) and a server (the lichess game)
-- Avoids having to use GET requests to constantly poll to see if something has happened
-- **How it works:**
-    - Establish WebSocket connection 
-    - The bot then listens for events via the WebSocket stream
-    - When Bot B lets say gets notified that Bot A made a move then it makes its move
-    - Continue through this loop until the game ends
+### 3. Edit your secret message  
 
-- **Practically**
-    - From `ChatGPT`
-```python
-import asyncio
-import websockets
+- Open the file `src/data/<folder_name>/secret.txt` and add your secret message
 
-async def play_game():
-    url = "wss://lichess.org/api/board/game/stream/{game_id}"  # Replace with actual game stream URL
-    async with websockets.connect(url) as websocket:
-        while True:
-            # Wait for an event from Lichess (like a move)
-            event = await websocket.recv()
-            print(f"Received event: {event}")
-            
-            # Parse event and decide on the bot's next move
-            # Send move to Lichess API if it's this bot's turn
-            if is_bot_turn(event):
-                move = decide_next_move(event)
-                await make_move(move)
+### 4. Encrypt the message  
+- Encrypt the contents of `secret.txt` into a chess game
+- The moves will be stored in `src/data/<folder_name>/predefined-moves/moves.json`:  
+	```bash  
+	make encrypt <folder_name>  
+	```  
 
-# Start the game
-asyncio.get_event_loop().run_until_complete(play_game())
-```
-- Notes on above code:
-    - We use the `websockets` library to establish WebSocket connection
-    - We use the `asyncio` library to run different tasks in our program asynchronously
-    - The code will wait on the `await` lines for a received message from the websocket
-    - Of course we don't want our prgram to stall forever and wait for one of these lines so we use asynchronous programming to perform other tasks while we wait for messages
-    - This approach using asynchronous would be useful for this use case but I'm doing a simpler approach
+### 5. Play the encrypted chess game  
 
-- **My Approach:**
-    - To keep things uncomplicated and modular im gonna have two programs running in different terminals concurrently. 
-    - One for Bot A and one for Bot B
-    - Then I might use docker to run these together with one executable
+- Set up two terminal sessions to simulate the chess game between two bots:  
 
+	- **Session A**:  
+		```bash  
+		make play_a <folder_name>  
+		```  
+	
+	- **Session B**:  
+		```bash  
+		make play_b <folder_name>  
+		```  
 
-## Progress so far
+- During the game, the moves will be played out and the game IDs will be saved in `src/data/<folder_name>/played-games/ids.json` for future use.  
 
-- Run Bot A first then Bot B
-- Right now Bot A successfully cancels all challenges and aborts all games then challenges Bot B
-- Then Bot B accepts the challenge
-- Need to figure out workflow of now play the accepted game between the two bots
-- Need to change things, right now im polling the stream and they don't like that
-- so change workflow
-- Workflow works, draw offers update game state to ChatLine or something so change it from checking for draw offer on each turn
+### 6. Load the played games  
 
-- Above works
-- At this stage now I should start pulling games and decoding them. 
-- Would also be nice to pull a game from a database and play the game out but ok (this wont have any practical use though, I suppose to just get bots to play any game might be cool?)
-- Can now decode a game using a pgn
-- Need to encode such that leading zeros is preserved
-    - Should thus rather work with strings
+- Retrieve the played games from Lichess using the saved game IDs
+	```bash  
+	make load <folder_name>  
+	```  
+- These games will be stored as `.pgn` files in `src/data/<folder_name>/played-games/`
 
-- Everything works for small case of "Hello World!"
-- Need to:
-    - Handle edge cases when games get long and only one move is available: cant store a single bit here since we cant make a choice between a 0 or 1
-    - Also when this happens we need to end that game and start a new one
-        - This adds a lot of complexity that im scared for (I wont lie)
+### 7. Decrypt the games  
 
-## Notes
+- Decrypt the loaded games to recover the original message:  
+	```bash  
+	make decrypt <folder_name>  
+	```  
 
-- would like to export th   e state of the game at each move but their API delays this request by 3 to 60 seconds to avoid cheating of some sort
+### 8. View the decrypted message  
+- The decrypted message will be available in:  
+	```  
+	src/data/<folder_name>/outp.txt  
+	```  
 
