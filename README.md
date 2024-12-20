@@ -1,5 +1,19 @@
+# Chess Encoding
 
-# Usage
+## Overview 
+
+**Chess Encoding** is a fun little idea I had to leverage [lichess.org • Free Online Chess](https://lichess.org/) to provide free an encrypted storage. 
+
+### How It Works
+
+1. **Store Your Message**: Start with a secret message stored in a `.txt` file.  
+2. **Convert to Bits**: Transform the message into its binary representation.  
+3. **Encode into a Chess Game**: Embed the bits into the moves of a chess game and save it for later.  
+4. **Play on Lichess**: Two bots registered on Lichess play out the encoded chess game.  
+5. **Retrieve and Decode**: At any time, fetch the played game from Lichess servers and decode it to recover the original secret message.
+
+
+## Usage
 
 Follow these steps to encrypt and decrypt a message using chess games:
 
