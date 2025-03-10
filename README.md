@@ -2,7 +2,7 @@
 
 ## Overview 
 
-**Chess Encoding** is a fun little idea I had to leverage [lichess.org • Free Online Chess](https://lichess.org/) to provide free an encrypted storage. 
+**Chess Encoding** is a fun little idea I had to leverage [lichess.org • Free Online Chess](https://lichess.org/) to provide free and encrypted storage. 
 
 ### How It Works
 
